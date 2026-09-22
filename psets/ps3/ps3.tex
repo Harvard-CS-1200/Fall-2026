@@ -1,0 +1,95 @@
+\documentclass[11pt]{article}
+\usepackage{cs1200}
+
+\initialize
+
+\begin{document}
+
+\psHeader{3}{Thu Oct. 6, 2026 (11:59pm)}
+
+Please see the syllabus for the full collaboration and generative AI policy, as well as information on grading, late days, and revisions.
+
+All sources of ideas, including (but not restricted to) any collaborators, AI tools, people outside of the course, websites, ARC tutors, and textbooks other than Hesterberg--Vadhan must be listed on your submitted homework along with a brief description of how they influenced your work. You need not cite core course resources, which are lectures, the Hesterberg--Vadhan textbook, sections, SREs, problem sets and solutions sets from earlier in the semester. If you use any concepts, terminology, or problem-solving approaches not covered in the course material by that point in the semester, you must describe the source of that idea. If you credit an AI tool for a particular idea, then you should also provide a primary source that corroborates it. Github Copilot and similar tools should be turned off when working on programming assignments.
+
+If you did not have any collaborators or external resources, please write 'none.' Please remember to select pages when you submit on Gradescope. A problem set on the border between two letter grades cannot be rounded up if pages are not selected.
+
+\vspace{1em}
+
+\textbf{Your name: }
+
+\textbf{Collaborators and External Resources:}
+
+\textbf{No. of late days used on previous psets: }
+
+\textbf{No. of late days used after including this pset: }
+
+\begin{enumerate}
+
+\item (Choosing Algorithms and Data Structures)
+
+Suppose the US Census Bureau was going to develop a new database to keep track of the exact ages of the entire US population, and publish statistics on it.  The data it has on each person is an exact birthdate
+$\bday$ (year, month, and date) and a unique identifier $\id$ (e.g. social security number --- pretend that these are assigned at birth). Make sure to read the question clearly as each subpart is a different situation.
+
+For each of the three (optionally, four) scenarios below,
+
+\begin{enumerate}[label=(\roman*)]
+\item Select the best algorithm or data structure for the Census Bureau to use from among the following:
+\begin{itemize}
+\item sorting and storing the sorted dataset
+\item storing in a binary search tree (balanced and possibly augmented)
+\item storing in a hash table
+\item running randomized QuickSelect.
+\end{itemize}
+
+\item Explain how you would use the
+algorithm or data structure (including any necessary augmentations) to solve the stated problem, For instance, what would you take as keys and values, what updates and queries (in case you use a dynamic data structure) would you issue, and how you would read off the results to obtain the desired statistics. If you are using an augmented data structure, specify the augmentation you are making and if you are using a hash table, specify its size.
+
+\item State what the runtime would be as a function of all of the relevant parameters: the size $n$ of the US population being surveyed, the number $u$ of updates issued at the specified time intervals, and/or the number $s$ of statistics released at the specified time intervals. (These parameters are not all freely varying in the parts below, $s$ may be a fixed constant or a function of $n$; state any such constraints in your answer)
+\end{enumerate}
+
+In each scenario, you should assume (unrealistically) that the described queries or statistics are the {\em only} way in which the data is going to be used, so there is no need to support anything else. If you find that only $\id$ or $\bday$ is relevant or necessary for some part, you can feel free to ignore the other component in your data structure.
+
+\begin{center}
+\fbox{
+    \begin{minipage}{.8\textwidth}
+    \paragraph{Example (Decennial Quartiles):} Every ten years as part of the Decennial Census, the Bureau obtains a fresh list of $(\id,\bday)$ pairs for the entire US population and wishes to release the 25th, 50th, and 75th percentiles of the population ages (to the day). \label{part:quantiles}
+    \ \\
+
+    \paragraph{Solution:}\
+    \begin{enumerate}[label=(\roman*)]
+        \item \textbf{Recommendation: }I would recommend that the Census Bureau use \QuickSelect.  I guess that a large enough of a fraction of the US population changes every 10 years that processing the updates individually would be more expensive than doing batch computations.
+        \item \textbf{How I would use my data structure/ algorithm:} They should use the $\bday$'s as keys; the $\id$'s are not needed because we only want to release age percentiles.
+        Each time they should run \QuickSelect\ with ranks $i=n/4,n/2,3n/4$, where $n$ is the size of the population at the time.
+        \item \textbf{Runtime: } We are calculating $s=3$ statistics every 10 years, and each execution of \QuickSelect\ takes expected time $O(n)$, for a total runtime of $s\cdot O(n)=O(n)$.
+    \end{enumerate}
+    \end{minipage}
+}
+\end{center}
+
+\begin{enumerate}
+
+\item (Reporting Age Rankings)
+
+Every ten years as part of the Decennial Census, the Bureau collects a fresh list of $(\id,\bday)$ pairs from the entire US population.
+(It does not reuse data from the previous Decennial Census, so everyone is re-surveyed.)
+In order to incentivize participation, the Bureau promises to tell every respondent their age-ranking in the population after the survey is done (e.g. ``you are the 796,421'th oldest person among those who responded to the Census''). If two people have the same birthday, its ok if their age-ranking is arbitrarily ranked with respect to each other.
+
+\item (Daily Quartiles)
+
+After each day, the Bureau obtains a list of data (given as a list of $(\id,\bday)$ pairs) to add to or remove from its database due to births, deaths, and immigration, and publishes an updated 25th, 50th, and 75th percentile of the population ages. \textit{HINT: } If we are making changes to the data, would a static or dynamic data structure be best?
+
+\item (Age Lookups)
+
+For privacy reasons, the Bureau decides to not publish any statistics on the population ages, but just wants to maintain a database where the age of any member of the population can be looked up quickly, and the database can be quickly updated daily according to births, deaths, and immigration.
+
+\item (Daily Quartiles, optional\footnote{This problem won't make a difference between N, L, R-, and R grades.}) The Bureau receives a daily list of updates and publish the 25th, 50th, and 75th percentile of population ages, similar to (b). This time, however, when an update deletes someone's data (i.e. death, emigration), the Bureau only receives their $\id$. Incoming data (i.e. birth, immigration) is still in the format $(\id, \bday)$.
+
+\end{enumerate}
+
+\item (Reflection) In what ways do LLMs impact your learning outcomes for this course? If you use LLMs in learning course material, give some example(s) of how they helped you learn something that lectures/sections etc did not. If you do not use LLMs, discuss reasons for why you do not use them. All opinions are valid.
+
+\item Once you're done with this problem set, please fill out \href{https://forms.gle/2577vuBRmnu4ugWt6}{this survey} so that we can gather students' thoughts on the problem set, and the class in general. It's not required, but we really appreciate all responses!
+
+\end{enumerate}
+
+\end{document}

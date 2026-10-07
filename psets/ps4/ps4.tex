@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-\usepackage{cs1200}
+\usepackage{Fall26/cs1200}
 \usepackage{graphicx}
 \usepackage{float}
 
@@ -99,16 +99,16 @@ $M[\outputpointer]=\result$\;
 \end{enumerate}
 
 \item (Simulating Word-RAM by RAM)
-For every Word-RAM program $P$, there is a RAM program $R$ that simulates $P$ in the following sense.  For every $n \in \N$, input array $x$ of length $n$, word-length $w$, and time bound $t$, $R(x,2^w, \max_i x[i],t)$ should do the following:
+For every Word-RAM program $P$, there is a RAM program $R$ that simulates $P$ in the following sense.  For every $n \in \N$, input array $x$ of length $n$, word-length $w$, and time bound $t$, $R(x,2^w, \max_i x[i],t)$ should do the following (note: this notation means that $x, 2^w, \max_i x[i], t$ are \emph{inputs} to $R$) :
 \begin{itemize}
     \item If $P[w](x)$ halts without crashing within $t$ steps, then $R$ should halt with the same as the output of $P[w](x)$.
     \item If $P[w](x)$ crashes or fails to halt within its first $t$ steps, then the $R$ should indicate so by halting with $\outputpointer=\outputlen=2^w$.
     \item The runtime of $R$ should be $O(t)$ and the largest memory location accessed by $R$ should be at most $n+t$.
     \item All of the values that $R$'s variables and memory cells hold during the computation should have bitlength at most $O(w+\log \max_i x[i] + \log n)$.
 \end{itemize}
-Your proof should use an {\em implementation-level} description, similar to the proof that RAM programs can be simulated by ones with at most $c$ registers in Theorem 6.4 from the Hesterberg-Vadhan textbook. \textit{Please keep your response within 1.5 pages.}
+Your proof should use an {\em implementation-level} description, similar to the proof that RAM programs can be simulated by ones with at most $c$ registers in Theorem 7.4 from the Hesterberg-Vadhan textbook. \textit{Please keep your response within 1.5 pages.}
 
-Recall that Word-RAM programs have a finite but changing memory size $S$; you may want to start your simulation by initializing $S$.  Then think about how each operation of a Word-RAM program $P$ can be simulated in a RAM program $R$, taking care of any differences between their semantics in the Word-RAM model vs. the RAM model. Don't forget MALLOC!
+Recall that Word-RAM programs have a finite but changing memory size $S$; you may want to start your simulation by initializing $S$. Then think about how each operation of a Word-RAM program $P$ can be simulated in a RAM program $R$, taking care of any differences between their semantics in the Word-RAM model vs. the RAM model. Don't forget MALLOC!
 
 \item (reflection) Discuss the value (or lack thereof) that you think computational models, and the RAM and Word-RAM models in particular, have for computer science.  All opinions are valid, as long as they show serious thought and are backed by specific justifications.
 
